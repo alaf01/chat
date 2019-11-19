@@ -1,0 +1,19 @@
+{% extends "logged_layout.html" %}
+
+{% block title %}
+    Speed chat
+{% endblock %}
+
+{% block body %}
+
+
+<h1>Chat</h1>
+<ul id="chat">
+</ul>
+<form id="add-message" class="message">
+  <br>
+    <textarea id="message" name="message" rows="2" cols="200" autocomplete="off" placeholder="Write a message" type="text"></textarea>
+    <input id="submit"  type="submit" value="sent message">
+</form>
+
+{% endblock %}

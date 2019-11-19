@@ -1,0 +1,161 @@
+#myid{
+
+    width: 100%;
+    height: 400px;
+    margin-top: : 5px;
+    background-image: url("images/chatnav.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border: 6px solid violet;
+}
+#big{
+  font-size: 2.5em;
+  font-variant: small-caps;
+  text-align: center;
+  border: 1px solid grey;
+  width: 100%;
+  margin: auto;
+  color:grey;
+  background-color: #dedcf5;
+}
+
+#onphoto{
+  font-size: 1.5em;
+  font-variant: small-caps;
+  text-align: center;
+  color:grey;
+}
+#relative{
+  position: relative;
+  top:20%;
+  text-align: center;
+}
+
+#message {
+  float: : bottom;
+}
+
+.container {
+  position: relative;
+}
+.text-block {
+  position: fixed;
+  bottom: 20%;
+  right: 10%;
+  left: 10%;
+  top: 20%;
+  background-color: white;
+  color: grey;
+  padding-left: 20px;
+  padding-right: 20px;
+  opacity: 0.85;
+}
+.navbar{
+
+      position: -webkit-sticky;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 0px;
+      background-color: 	brown;
+      border: 2px solid grey;
+      border-radius: 50px;
+      width: 100%;
+      padding-bottom: 5px;
+
+}
+.backg{
+      background-color: #f3e6ff;
+      background-image: url("images/chatting.jpg");
+      background-repeat: no-repeat;
+      background-size: 100%;
+      width:  100%;
+      height: 1000px;
+      opacity:1;
+
+}
+.backg1 {
+  height: 1000px;
+  width: 100%;
+    background-color: red; /* For browsers that do not support gradients */
+  background-image: linear-gradient(to right, hotpink , violet); /* Standard syntax (must be last) */
+}
+.inline{
+      display: inline;
+      text-align: center;
+      width: auto;
+      border: 3px solid violet;
+      border-radius: 20px;
+      padding: 10px;
+      font-variant: small-caps;
+      font-size: 1.5em;
+      margin: 10px;
+      float: left;
+      background-color: #ffcccc;
+      color: blue;
+
+}
+  .inline a {
+      color: #cc0099;
+      text-decoration: none;
+}
+
+  .inline:hover{
+    background-color: powderblue;
+}
+  .login{
+    display: inline;
+    text-align: center;
+    border: 2px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+    font-variant: small-caps;
+    font-size: 1 em;
+    margin: 10px;
+    float: left;
+    background-color: #c2c2a3;
+    color: #333300;
+    width: 4%;
+    opacity: 0.7;
+
+}
+  .chatinside{
+    fill:blue;stroke:pink;stroke-width:5;opacity:0.65;
+    display: block;
+    margin: auto;
+    z=1;
+}
+.chatform{
+  color:red;
+}
+.message{
+  position: absolute;
+  align-items: center;
+  bottom: 20px;
+}
+
+h1 {
+  color: #66664d;
+  align-items: center;
+}
+p {
+  color: #694a55;
+}
+ul{
+  list-style-type: none;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #4d2600;
+    font-size: 17px;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color:    #4d2600;
+    font-size: 17px;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #4d2600;
+    font-size: 17px;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #4d2600;
+    font-size: 17px;

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <script>  localStorage.setItem('login', "{{login}}") </script>
+    <script>  var login = {{login}} </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <link rel="stylesheet" href="static/style.css">
+<body>
+
+  <div class="container">
+
+
+
+      <div class="navbar">
+        <p class="login">you are: {{session.get("username")}} </p>
+        <p class="inline"> <a>start a new channel</a> </p>
+        <p class="inline"> <a>join a channel</a> </p>
+        <p class="inline"> <a href ="/general">general chat</a> </p>
+        <p class="inline"> <a href="/logout">Logout</a> </p>
+
+      </div>
+  <img class="backg">
+ <div class="text-block">
+   {% block body %}{% endblock %}
+  </div>
+<p id="whatIs">Nowy paragraf</p>
+
+</body>
+</html>

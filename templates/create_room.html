@@ -1,0 +1,32 @@
+{% extends "logged_layout.html" %}
+
+{% block title %}
+    Speed chat
+{% endblock %}
+
+{% block body %}
+<h3> Available rooms: </h3>
+{% for room in rooms %}
+<p> {{room}} </p>
+{% endfor %}
+<h3> Logged users: </h3>
+{% for user in users %}
+<p> {{user}} </p>
+{% endfor %}
+
+<hr>
+<form id="myforma" class="chatform">
+  <textarea id="room"  placeholder="New room name" type="text"></textarea>
+    <input type="submit" value="Send message">
+
+</form>
+<p id="chat">Nazwa roomu
+</p>
+<script type="text/javascript">
+  document.getElementById('myforma').onsubmit = () => {
+  var roomName = document.getElementById('room').value;
+  document.getElementById("chat").innerHTML = roomName;
+  return false;
+}
+</script>
+{% endblock %}

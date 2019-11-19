@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+    <link rel="stylesheet" href="static/style.css">
+  </head>
+<body>
+
+  <div class="container">
+
+
+      <div class="navbar">
+        <p class="inline"> <a href="/login"> log in </a> </p>
+      <!--  <p class="inline"> <a href="/register"> register </a> </p> -->
+      <!--  <p class="inline"> <a href="website.html"> general chat </a> </p> -->
+
+      </div>
+      <img class="backg">
+      <div class="text-block">
+{% block body %}{% endblock %}
+Hello world
+
+ </div>
+
+
+
+
+  </div>
+</body>
+</html>

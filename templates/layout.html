@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="static/style.css">
+  </head>
+<body>
+
+  <div class="container">
+
+
+
+      <div class="navbar">
+        <p class="inline"> start chat </p>
+        <p class="inline"> write personal message </p>
+        <p class="inline"> general chat </p>
+      </div>
+          <p id= "big"><span class="far fa-comment-dots"></span> Speed chat for quick communication <span class="far fa-comment-dots"></span></p>
+
+        <div id="myid"> <p id="onphoto">Chat now</p> </div>
+          <div class="backg">tlo</div>
+
+
+
+
+        {% block body %}{% endblock %}
+
+  </div>
+</body>
+</html>
