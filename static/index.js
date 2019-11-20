@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // When a new vote is announced, add to the unordered list
     socket.on('send message', data => {
       document.querySelector('#chat').innerHTML += "<br>";
+      document.querySelector('#chat').innerHTML += localStorage.login;
+      document.querySelector('#chat').innerHTML += ": ";
         document.querySelector('#chat').innerHTML += data;
 
     });
