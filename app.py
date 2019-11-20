@@ -49,6 +49,11 @@ def general():
 @socketio.on("submit message")
 def message(message):
     emit("send message", {'data': message['data']}, broadcast = True)
+
+@socketio.on('my_event', namespace='/test')
+def test_message(message):
+    emit('my_response',
+         {'data': message['data']})
 '''
 @socketio.on('my_event', namespace='/test')
 def test_message(message):
