@@ -50,6 +50,10 @@ def general():
 def message(data):
     emit("send message", data, broadcast=True)
 
+@socketio.on('my_event', namespace='/test')
+def test_message(message):
+    emit('my_response',{'data': message['data']})
+
 @socketio.on('join')
 def on_join(data):
     username = data['username']

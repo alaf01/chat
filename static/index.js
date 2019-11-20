@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // When connected, configure buttons
     socket.on('connect', () => {
-      document.getElementById('myform').onsubmit =  () => {
+      document.getElementById('add-message').onsubmit =  () => {
 
         socket.emit('submit message', document.getElementById('message').value);
         document.getElementById('message').value = ''
@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // When a new vote is announced, add to the unordered list
     socket.on('send message', data => {
-        document.querySelector('#chat').innerHTML += ("<br>" + localStorage.getItem("login") + ": "+ data);
+      document.querySelector('#chat').innerHTML += "<br>";
+        document.querySelector('#chat').innerHTML += data;
 
     });
 });
