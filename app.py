@@ -47,9 +47,9 @@ def general():
 
 #it takes the data from jv socket "submit message" sent by js file and send it back to js naming "send message". Data is default name for second argument of emit
 @socketio.on("submit message")
-def message(data):
-    emit("send message", data, broadcast=True)
-
+def message(message):
+    emit("send message", {'data': message['data']})
+'''
 @socketio.on('my_event', namespace='/test')
 def test_message(message):
     emit('my_response',{'data': message['data']})
@@ -67,7 +67,7 @@ def on_leave(data):
     room = data['room']
     leave_room(room)
     send(username + ' has left the room.', room=room)
-
+'''
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)

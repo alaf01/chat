@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('connect', () => {
       document.getElementById('add-message').onsubmit =  () => {
 
-        socket.emit('submit message', document.getElementById('message').value);
+        socket.emit('submit message', {'data': document.getElementById('message').value});
         document.getElementById('message').value = ''
         //disable submit button
         document.getElementById('submit').disabled = true;
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('#chat').innerHTML += "<br>";
       document.querySelector('#chat').innerHTML += localStorage.login;
       document.querySelector('#chat').innerHTML += ": ";
-        document.querySelector('#chat').innerHTML += data;
+      document.querySelector('#chat').innerHTML += data.data;
 
     });
 });
