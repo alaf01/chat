@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+
   document.getElementById('room').style.display="none";
+  document.getElementsByTagName('h2')[0].style.display = 'none';
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
     var room = document.getElementById('create_room').value;
 
     document.getElementById('create').onsubmit = () => {
       //  document.getElementById('chat').innerHTML += document.getElementById('room').value;
-
+      document.getElementsByTagName('h2')[0].style.display = 'block';
         socket.emit('join', {'room': document.getElementById('create_room').value});
         return false;
     };
@@ -25,6 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     socket.on('chat_in_room', data => {
-      document.querySelector('#chat').innerHTML += '<br>'+data.message;
+      document.querySelector('#chat').innerHTML += '<br>'+data.user+': '+data.message;
     })
   })

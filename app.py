@@ -9,6 +9,7 @@ socketio = SocketIO(app)
 
 rooms = ["chanel1", "chanel2"]
 users=["Ala", "Doma", "Mysia"]
+whoisin={'myroom':[]}
 
 @app.route("/")
 def index():
@@ -59,15 +60,21 @@ def test_message(message):
 def join(room):
     join_room(room['room'])
     rooms.append(room['room'])
+    if room['room'] not in whoisin:
+        whoisin[room['room']]= [session.get("username")]
+    else:
+        whoisin[room['room']].append(session.get("username"))
     emit('my_response',
-         {'data': 'User  has entered the room',
+         {'data': 'User: '+session.get("username")+'  has entered the room',
          'room': room['room']})
 
 
 @socketio.on('send_to_room')
 def send_to_room(data):
+    rooms.append(data['room'])
+
     emit('chat_in_room',
-        {'message': data['message'],
+        {'message': data['message'],'user': session.get("username"),
         'room': data['room']}, room=data['room'])
 '''
 etio.on('my_room_event', namespace='/test')
