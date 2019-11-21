@@ -1,13 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-
   document.getElementById('room').style.display="none";
-  document.getElementsByTagName('h2')[0].style.display = 'none';
+    document.getElementById('chatlog').style.display="none";
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
     var room = document.getElementById('create_room').value;
 
     document.getElementById('create').onsubmit = () => {
       //  document.getElementById('chat').innerHTML += document.getElementById('room').value;
-      document.getElementsByTagName('h2')[0].style.display = 'block';
+
         socket.emit('join', {'room': document.getElementById('create_room').value});
         return false;
     };
@@ -15,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('title').innerHTML="Start chat";
       document.getElementById('create').style.display="none";
       document.getElementById('room').style.display="block";
+      document.getElementById('chatlog').style.display="block";
       document.querySelector('#chat').innerHTML += '<br>'+ 'the room: \"' + data.room + '\" was created';
       document.querySelector('#chat').innerHTML += '<br>'+ data.data;
 
