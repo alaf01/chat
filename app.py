@@ -60,15 +60,16 @@ def join(room):
     join_room(room['room'])
     rooms.append(room['room'])
     emit('my_response',
-         {'data': 'User {} has entered the room'.format(session['username']),
+         {'data': 'User  has entered the room',
          'room': room['room']})
-'''
+
+
+@socketio.on('send_to_room')
 def send_to_room(data):
     emit('chat_in_room',
-        {'message': data.message,
-        'user': session['username'],
-        'room': data['room']}, room= data['room'])
-
+        {'message': data['message'],
+        'room': data['room']}, room=data['room'])
+'''
 etio.on('my_room_event', namespace='/test')
 def send_room_message(message):
     session['receive_count'] = session.get('receive_count', 0) + 1
@@ -91,4 +92,4 @@ def on_leave(data):
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
-    socketio.run(app, debug=True, host='0.0.0.0', port=7000)
+    socketio.run(app, debug=True, host='0.0.0.0', port=5000)

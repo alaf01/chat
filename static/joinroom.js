@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('room').onsubmit = () => {
-      socket.emit('send_to_room', {'message': document.getElementById('message').value, 'room': room});
+      socket.emit('send_to_room', {'message': document.getElementById('message').value, 'room': document.getElementById('create_room').value});
       document.getElementById('message').value='';
       return false;
     };
 
     socket.on('chat_in_room', data => {
-      document.querySelector('#chat').innerHTML += data.message ;
+      document.querySelector('#chat').innerHTML += '<br>'+data.message;
     })
   })
