@@ -54,17 +54,32 @@ def message(message):
 def test_message(message):
     emit('my_response',
          {'data': message['data']})
+
+@socketio.on('join')
+def join(room):
+    join_room(room['room'])
+    rooms.append(room['room'])
+    emit('my_response',
+         {'data': 'User {} has entered the room'.format(session['username']),
+         'room': room['room']})
 '''
+def send_to_room(data):
+    emit('chat_in_room',
+        {'message': data.message,
+        'user': session['username'],
+        'room': data['room']}, room= data['room'])
+
+etio.on('my_room_event', namespace='/test')
+def send_room_message(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': message['data'], 'count': session['receive_count']},
+         room=message['room'])
+
 @socketio.on('my_event', namespace='/test')
 def test_message(message):
     emit('my_response',{'data': message['data']})
 
-@socketio.on('join')
-def on_join(data):
-    username = data['username']
-    room = data['room']
-    join_room(room)
-    send(username + ' has entered the room.', room=room)
 
 @socketio.on('leave')
 def on_leave(data):
@@ -76,5 +91,4 @@ def on_leave(data):
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
-    socketio.run(app, debug=True)
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    socketio.run(app, debug=True, host='0.0.0.0', port=7000)
