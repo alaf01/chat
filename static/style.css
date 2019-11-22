@@ -38,6 +38,11 @@
 .container {
   position: relative;
 }
+.absolute {
+  position: absolute;
+  top:20%;
+  left: 10%
+}
 .text-block {
   position: fixed;
   bottom: 20%;

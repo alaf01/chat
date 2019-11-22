@@ -1,16 +1,19 @@
 import os
 import requests
+from datetime import datetime
 from flask import Flask, render_template, session, request, url_for, escape, redirect, jsonify
 from flask_socketio import SocketIO, emit,join_room, leave_room
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
-
+now=str(datetime.now())[:16]
 rooms = ["chanel1", "chanel2"]
 users=["Ala", "Doma", "Mysia"]
 whoisin={'room1':['Ala','Ola','Kasia'], 'room2':['Wojtus', 'Domka', 'Rysiek'], 'room3':[],'myroom':[]}
-whoiswhere={"Ala":"room1"}
+whoiswhere={"Ala":"room1","Doma":"chanel1", "Mysia":"chanel2",'Wojtus':"room1", 'Domka':"room1", 'Rysiek':"chanel2"}
+
 @app.route("/")
 def index():
     if not session.get("username") is None:
@@ -31,77 +34,82 @@ def login():
 
 @app.route('/create_room')
 def new_room():
-    return render_template("create_room.html", rooms = rooms, users = users)
+    if session.get("username") is None:
+        return render_template("error.html", message="log in to create a new room")
+    else:
+        return render_template("create_room.html", rooms = rooms, users = users)
 
 @app.route("/logout")
 def logout():
-    del whoiswhere[session.get("username")]
-    if not session.get("username") is None:
-        users.remove(str(session['username']))
+# if user is not logged, return error message
+    if session.get("username") is None:
+        return render_template("error.html", message='You are not logged in!')
+# if logged
     else:
+        # take the username from session and delete it form 'whoiswhere' dictionary, where all of active users are (with room no)
+        username=str(session.get("username"))
+        if username in whoiswhere:
+            del whoiswhere[session.get("username")]
+        # finish user session and go back to users
         session.pop("username", None)
-    session.pop("username", None)
+        return render_template("index.html")
 
-    return render_template("index.html")
-
-@app.route("/general")
-def general():
-    return redirect(url_for('index'))
 
 @app.route("/room_list")
 def room_list():
+    if session.get("username") is None:
+        return render_template("index.html")
     active=[]
     for user, room in whoiswhere.items():
-        active.append(room)
+            if room not in active:
+                active.append(room)
 
     return render_template("room_list.html", rooms=rooms, active=active )
+
+####################-----------    SOCKETS     ----------------------#####################################3
 #it takes the data from jv socket "submit message" sent by js file and send it back to js naming "send message". Data is default name for second argument of emit
 @socketio.on("submit message")
 def message(message):
-    emit("send message", {'data': message['data']}, broadcast = True)
+    emit("send message", {'data': message['data'], 'time': now}, broadcast = True)
 
-@socketio.on('my_event', namespace='/test')
-def test_message(message):
-    emit('my_response',
-         {'data': message['data']})
 
 @socketio.on('join')
 def join(room):
+    for elem in whoiswhere.values():
+        if elem==room['room']:
+            emit('room_exists', {'message':'room already exists, join it!'})
+
     join_room(room['room'])
     whoiswhere[session.get("username")]=room['room']
     rooms.append(room['room'])
     emit('my_response',
-         {'data': 'User: '+session.get("username")+'  has entered the room',
+         {'data': 'User: '+session.get("username")+'  has entered the room',  'time': now,
          'room': room['room']})
 
+@socketio.on('join_existing')
+def join_existing(room):
+    join_room(room['room'])
+    whoiswhere[session.get("username")]=room['room']
+    rooms.append(room['room'])
+    emit('my_response',
+         {'data': 'User: '+session.get("username")+'  has entered the room: '+room['room'],
+         'time': now,
+         'user': session.get("username"),
+         'room': room['room']}, room=room['room'])
 
 @socketio.on('send_to_room')
 def send_to_room(data):
     rooms.append(data['room'])
 
     emit('chat_in_room',
-        {'message': data['message'],'user': session.get("username"),
+        {'message': data['message'],'user': session.get("username"), 'time': now,
         'room': data['room']}, room=data['room'])
-'''
-etio.on('my_room_event', namespace='/test')
-def send_room_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': message['data'], 'count': session['receive_count']},
-         room=message['room'])
 
-@socketio.on('my_event', namespace='/test')
-def test_message(message):
-    emit('my_response',{'data': message['data']})
-
-
-@socketio.on('leave')
-def on_leave(data):
-    username = data['username']
-    room = data['room']
-    leave_room(room)
-    send(username + ' has left the room.', room=room)
-'''
+@socketio.on('add_message')
+def add_message(data):
+    emit('chat_in_room',
+        {'message': str(data['message']),'user': session.get("username"), 'time': now,
+        'room': data['room']}, room=data['room'] )
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
