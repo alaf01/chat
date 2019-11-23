@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // When connected, configure buttons
     socket.on('connect', () => {
       document.getElementById('add-message').onsubmit =  () => {
-
         socket.emit('submit message', {'data': document.getElementById('message').value});
         document.getElementById('message').value = ''
         //disable submit button
@@ -28,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // When a new vote is announced, add to the unordered list
     socket.on('send message', data => {
       document.querySelector('#chat').innerHTML += "<br>";
-      document.querySelector('#chat').innerHTML += data.time;
-      document.querySelector('#chat').innerHTML += ' '+login;
+      document.querySelector('#chat').innerHTML += data.time + ' ';
+      document.querySelector('#chat').innerHTML += login;
       document.querySelector('#chat').innerHTML += ": ";
       document.querySelector('#chat').innerHTML += data.data;
 

@@ -8,12 +8,13 @@ from flask_socketio import SocketIO, emit,join_room, leave_room
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
-now=str(datetime.now())[:16]
+
 rooms = ["chanel1", "chanel2"]
 users=["Ala", "Doma", "Mysia"]
 whoisin={'room1':['Ala','Ola','Kasia'], 'room2':['Wojtus', 'Domka', 'Rysiek'], 'room3':[],'myroom':[]}
 whoiswhere={"Ala":"room1","Doma":"chanel1", "Mysia":"chanel2",'Wojtus':"room1", 'Domka':"room1", 'Rysiek':"chanel2"}
-
+messages={'room1': ['message']}
+general_mess=[]
 @app.route("/")
 def index():
     if not session.get("username") is None:
@@ -70,6 +71,7 @@ def room_list():
 #it takes the data from jv socket "submit message" sent by js file and send it back to js naming "send message". Data is default name for second argument of emit
 @socketio.on("submit message")
 def message(message):
+    now=str(datetime.now())[:16]
     emit("send message", {'data': message['data'], 'time': now}, broadcast = True)
 
 
@@ -78,7 +80,7 @@ def join(room):
     for elem in whoiswhere.values():
         if elem==room['room']:
             emit('room_exists', {'message':'room already exists, join it!'})
-
+    now=str(datetime.now())[:16]
     join_room(room['room'])
     whoiswhere[session.get("username")]=room['room']
     rooms.append(room['room'])
@@ -88,6 +90,7 @@ def join(room):
 
 @socketio.on('join_existing')
 def join_existing(room):
+    now=str(datetime.now())[:16]
     join_room(room['room'])
     whoiswhere[session.get("username")]=room['room']
     rooms.append(room['room'])
@@ -100,13 +103,14 @@ def join_existing(room):
 @socketio.on('send_to_room')
 def send_to_room(data):
     rooms.append(data['room'])
-
+    now=str(datetime.now())[:16]
     emit('chat_in_room',
         {'message': data['message'],'user': session.get("username"), 'time': now,
         'room': data['room']}, room=data['room'])
 
 @socketio.on('add_message')
 def add_message(data):
+    now=str(datetime.now())[:16]
     emit('chat_in_room',
         {'message': str(data['message']),'user': session.get("username"), 'time': now,
         'room': data['room']}, room=data['room'] )
