@@ -1,2 +1,8 @@
-Flask
-Flask-SocketIO
+Flask==1.0.2
+Flask-Session==0.3.1
+Flask_SocketIO
+Jinja2==2.10
+python-engineio
+python-socketio
+Werkzeug==0.14.1
+requests
