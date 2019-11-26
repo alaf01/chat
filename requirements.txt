@@ -4,5 +4,5 @@ Flask_SocketIO
 Jinja2==2.10
 python-engineio
 python-socketio
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 requests
